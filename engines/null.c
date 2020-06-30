@@ -141,7 +141,7 @@ static int fio_null_init(struct thread_data *td)
 	return 0;
 }
 
-static struct ioengine_ops ioengine = {
+FIO_STATIC struct ioengine_ops ioengine = {
 	.name		= "null",
 	.version	= FIO_IOOPS_VERSION,
 	.queue		= fio_null_queue,
@@ -254,22 +254,6 @@ static void fio_null_cleanup(struct thread_data *td)
 	delete NullData::get(td);
 }
 
-static struct ioengine_ops ioengine;
-void get_ioengine(struct ioengine_ops **ioengine_ptr)
-{
-	*ioengine_ptr = &ioengine;
-
-	ioengine.name           = "cpp_null";
-	ioengine.version        = FIO_IOOPS_VERSION;
-	ioengine.queue          = fio_null_queue;
-	ioengine.commit         = fio_null_commit;
-	ioengine.getevents      = fio_null_getevents;
-	ioengine.event          = fio_null_event;
-	ioengine.init           = fio_null_init;
-	ioengine.cleanup        = fio_null_cleanup;
-	ioengine.open_file      = fio_null_open;
-	ioengine.flags          = FIO_DISKLESSIO | FIO_FAKEIO;
-}
 }
 #endif /* FIO_EXTERNAL_ENGINE */
 
